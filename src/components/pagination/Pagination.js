@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import BookList from '../book/BookList'
 
 const Pagintion = ({ currentItem, handlePageClick, pageCount, updateItem }) => {
