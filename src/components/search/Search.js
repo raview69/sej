@@ -8,7 +8,10 @@ const Search = ({ details }) => {
     const [searchAsuk, setSearchAsuk] = useState([])
 
     const filteredCoin = details.filter((item) => {
-        return item.title.includes(searchField)
+        return (
+            item.title.includes(searchField) ||
+            item.authors.includes(searchField)
+        )
     })
 
     const handleChange = (e) => {
@@ -55,7 +58,7 @@ const Search = ({ details }) => {
 
     return (
         <form
-            className="py-4 sm:flex sm:items-center sm:justify-center pb-28 text-lg lg:mx-16"
+            className=" sm:flex sm:items-center sm:justify-center text-lg lg:mx-16"
             onSubmit={handleSubmit}
         >
             <div className="flex items-center justify-center">

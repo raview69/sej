@@ -1,11 +1,15 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Pagination from './components/pagination/Pagination'
+import Whitelist from './components/whitelist/Whitelist'
+import CartList from './components/cart/CartList'
 import Search from './components/search/Search'
 
 const App = () => {
     const [currentItem, setCurrentItems] = useState([])
-    const [itemSearch, setitemSearch] = useState([])
+    const [itemCount, setItemCount] = useState(0)
+    const [itemCart, setItemCart] = useState([])
+    const [cartShow, setCartShow] = useState(false)
     const [pageCount, setPageCount] = useState(0)
     const [itemOffset, setItemOffset] = useState(0)
     const [indexPage, setIndexPage] = useState(0)
@@ -28,7 +32,6 @@ const App = () => {
             const dataGet = getData.data
             setCurrentItems(getData.data.slice(itemOffset, endOffset))
             setPageCount(Math.ceil(dataGet.length / itemsPerPage))
-            setitemSearch(dataGet)
         }
         bookData()
     }, [itemOffset, itemsPerPage])
@@ -39,15 +42,53 @@ const App = () => {
         setIndexPage(event.selected)
     }
 
+    const handleClickCart = () => {
+        const newTodo = [...itemCart]
+        setItemCart(newTodo)
+        console.log(...itemCart)
+
+        if (itemCart.length == 0) {
+            setItemCount(0)
+        } else {
+            setItemCount(itemCart.length)
+        }
+    }
+
+    const handleCartClick = () => {
+        setCartShow(true)
+    }
+
+    const handleCartCloseClick = () => {
+        setCartShow(false)
+    }
+
     return (
         <>
-            <Search details={itemSearch} />
-            <Pagination
-                currentItem={currentItem}
-                indexPage={indexPage}
-                handlePageClick={handlePageClick}
-                pageCount={pageCount}
-            />
+            {cartShow ? (
+                <>
+                    <button onClick={handleCartCloseClick}>Close</button>
+                    <CartList cartData={itemCart} />
+                </>
+            ) : (
+                <>
+                    <div className="flex top-0 left-0 w-full h-20 mb-4 justify-between items-center px-10 shadow-lg z-10">
+                        <Search details={currentItem} />
+                        <div onClick={handleCartClick}>
+                            <Whitelist number={itemCount} />
+                        </div>
+                    </div>
+
+                    <div onClick={handleClickCart}>
+                        <Pagination
+                            currentItem={currentItem}
+                            indexPage={indexPage}
+                            handlePageClick={handlePageClick}
+                            pageCount={pageCount}
+                            updateItem={itemCart}
+                        />
+                    </div>
+                </>
+            )}
         </>
     )
 }
