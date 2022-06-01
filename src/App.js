@@ -4,9 +4,11 @@ import Pagination from './components/pagination/Pagination'
 import Whitelist from './components/whitelist/Whitelist'
 import CartList from './components/cart/CartList'
 import Search from './components/search/Search'
+import Category from './components/category/Category'
 
 const App = () => {
     const [currentItem, setCurrentItems] = useState([])
+    const [category, setCategory] = useState(1)
     const [itemCount, setItemCount] = useState(0)
     const [itemCart, setItemCart] = useState([])
     const [cartShow, setCartShow] = useState(false)
@@ -14,12 +16,13 @@ const App = () => {
     const [itemOffset, setItemOffset] = useState(0)
     const [indexPage, setIndexPage] = useState(0)
     const itemsPerPage = 12
+    const [storeCategory, setStoreCategory] = useState([])
 
     useEffect(() => {
         const bookData = async () => {
             const endOffset = itemOffset + itemsPerPage
             const getData = await axios.get(
-                '/fee-assessment-books/?categoryId=1&page=0&size=48',
+                `/fee-assessment-books/?categoryId=${category}&page=0&size=48`,
                 {
                     headers: {
                         'access-control-allow-origin': '*',
@@ -34,14 +37,19 @@ const App = () => {
             setPageCount(Math.ceil(dataGet.length / itemsPerPage))
         }
         bookData()
-    }, [itemOffset, itemsPerPage])
+    }, [itemOffset, itemsPerPage, category])
 
     const handlePageClick = (event) => {
         const newOffset = event.selected * itemsPerPage
         setItemOffset(newOffset)
         setIndexPage(event.selected)
     }
-
+    const handleSubmit = (e) => {
+        const filteredCoin = currentItem.filter((item) => {
+            return item.title.includes(e) || item.authors.includes(e)
+        })
+        setCurrentItems(filteredCoin)
+    }
     const handleClickCart = () => {
         const newTodo = [...itemCart]
         setItemCart(newTodo)
@@ -52,6 +60,12 @@ const App = () => {
         } else {
             setItemCount(itemCart.length)
         }
+    }
+
+    const handleCategoryClick = () => {
+        setCategory(storeCategory[0])
+        setStoreCategory((storeCategory.length = 0))
+        setStoreCategory([])
     }
 
     const handleCartClick = () => {
@@ -65,20 +79,22 @@ const App = () => {
     return (
         <>
             {cartShow ? (
-                <>
+                <div className="lg:mx-56">
                     <button onClick={handleCartCloseClick}>Close</button>
                     <CartList cartData={itemCart} />
-                </>
+                </div>
             ) : (
                 <>
                     <div className="flex top-0 left-0 w-full h-20 mb-4 justify-between items-center px-10 shadow-lg z-10">
-                        <Search details={currentItem} />
+                        <Search details={currentItem} onSubmit={handleSubmit} />
                         <div onClick={handleCartClick}>
                             <Whitelist number={itemCount} />
                         </div>
                     </div>
-
-                    <div onClick={handleClickCart}>
+                    <div onClick={handleCategoryClick} className="lg:mx-22">
+                        <Category categoryList={storeCategory} />
+                    </div>
+                    <div onClick={handleClickCart} className="lg:mx-22">
                         <Pagination
                             currentItem={currentItem}
                             indexPage={indexPage}

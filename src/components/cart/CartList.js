@@ -6,7 +6,8 @@ const CartList = ({ cartData }) => {
             <div>
                 <img src={items[1]} alt={items[0]} />
                 <div className="">{items[0]}</div>
-                <div className="text-sm font-extralight">{items[2]}</div>
+                <div className="text-sm font-extralight">By: {items[2]}</div>
+                <div className="text-sm font-extralight">{items[3]}</div>
             </div>
         </li>
     ))

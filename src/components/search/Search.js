@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import SearchList from './SearchList'
 import SearchScrool from './SearchScrool'
 
-const Search = ({ details }) => {
+const Search = ({ details, onSubmit }) => {
     const [searchField, setSearchField] = useState('')
     const [searchShow, setSearchShow] = useState(false)
     const [searchAsuk, setSearchAsuk] = useState([])
@@ -36,6 +36,7 @@ const Search = ({ details }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        onSubmit(searchField)
     }
 
     const searchBox = () => {
@@ -58,7 +59,7 @@ const Search = ({ details }) => {
 
     return (
         <form
-            className=" sm:flex sm:items-center sm:justify-center text-lg lg:mx-16"
+            className="sm:flex sm:items-center sm:justify-center text-lg lg:mx-16"
             onSubmit={handleSubmit}
         >
             <div className="flex items-center justify-center">
@@ -83,7 +84,7 @@ const Search = ({ details }) => {
             </div>
             <div className="pr-8 sm:pr-2 lg:pr-8  text-black">
                 <button className="px-2 border-2 rounded-sm text-center">
-                    Submit
+                    Search
                 </button>
             </div>
         </form>
