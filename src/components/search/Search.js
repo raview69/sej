@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import SearchList from './SearchList'
 import SearchScrool from './SearchScrool'
+import { AiOutlineSearch } from 'react-icons/ai'
 
 const Search = ({ details, onSubmit }) => {
     const [searchField, setSearchField] = useState('')
@@ -32,6 +33,7 @@ const Search = ({ details, onSubmit }) => {
         setSearchAsuk((searchAsuk.length = 0))
         setSearchAsuk([])
         setSearchField('')
+        window.location.reload()
     }
 
     const handleSubmit = (e) => {
@@ -42,10 +44,7 @@ const Search = ({ details, onSubmit }) => {
     const searchBox = () => {
         if (searchShow) {
             return (
-                <div
-                    className="absolute border-2 border-black"
-                    onClick={handleClick}
-                >
+                <div className="absolute bg-white p-2" onClick={handleClick}>
                     <SearchScrool>
                         <SearchList
                             filteredCoin={filteredCoin}
@@ -59,14 +58,14 @@ const Search = ({ details, onSubmit }) => {
 
     return (
         <form
-            className="sm:flex sm:items-center sm:justify-center text-lg lg:mx-16"
+            className="flex items-center justify-center sm:text-lg lg:mx-16 text-md"
             onSubmit={handleSubmit}
         >
             <div className="flex items-center justify-center">
                 <div className="">
-                    <div className="flex ">
+                    <div className="flex">
                         <input
-                            className="border-y-2 border-l-2 w-52"
+                            className="w-32 border-y-2 border-l-2 sm:w-52 focus:outline-none"
                             type="text"
                             placeholder="Search your books"
                             value={searchField}
@@ -78,12 +77,16 @@ const Search = ({ details, onSubmit }) => {
                         >
                             X
                         </button>
+                        <button className="px-2 border-2 rounded-sm text-center sm:hidden">
+                            <AiOutlineSearch />
+                        </button>
                     </div>
+
                     {searchBox()}
                 </div>
             </div>
-            <div className="pr-8 sm:pr-2 lg:pr-8  text-black">
-                <button className="px-2 border-2 rounded-sm text-center">
+            <div className="sm:pr-2 lg:pr-8  text-black">
+                <button className="invisible sm:visible sm:px-2 sm:border-2 sm:rounded-sm sm:text-center ">
                     Search
                 </button>
             </div>

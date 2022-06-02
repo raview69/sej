@@ -79,16 +79,30 @@ const App = () => {
     return (
         <>
             {cartShow ? (
-                <div className="lg:mx-56">
-                    <button onClick={handleCartCloseClick}>Close</button>
+                <div className="mx-2">
+                    <button
+                        className="border-2 px-3 py-1 rounded-lg mb-4 mt-4"
+                        onClick={handleCartCloseClick}
+                    >
+                        Close
+                    </button>
                     <CartList cartData={itemCart} />
                 </div>
             ) : (
                 <>
-                    <div className="flex top-0 left-0 w-full h-20 mb-4 justify-between items-center px-10 shadow-lg z-10">
-                        <Search details={currentItem} onSubmit={handleSubmit} />
-                        <div onClick={handleCartClick}>
-                            <Whitelist number={itemCount} />
+                    <div className="flex top-0 left-0 w-full h-20 mb-1 bg-white sticky justify-between items-center sm:px-10 shadow-md z-10 px-2">
+                        <div className="sm:text-2xl">SEJBooks</div>
+                        <div className="flex items-center justify-center">
+                            <Search
+                                details={currentItem}
+                                onSubmit={handleSubmit}
+                            />
+                            <div
+                                onClick={handleCartClick}
+                                className=" -ml-10 sm:ml-10"
+                            >
+                                <Whitelist number={itemCount} />
+                            </div>
                         </div>
                     </div>
                     <div onClick={handleCategoryClick} className="lg:mx-22">

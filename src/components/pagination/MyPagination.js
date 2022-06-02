@@ -9,7 +9,7 @@ export const MyPagination = styled(ReactPaginate).attrs({
     flex-direction: row;
     font-size: 14px;
     justify-content: space-between;
-    margin-top: 10px;
+    margin-top: 40px;
     margin-bottom: 10px;
     border: black 1px solid;
     border-radius: 4px;

@@ -2,9 +2,9 @@ import React from 'react'
 
 const Whitelist = ({ number }) => {
     return (
-        <button className="flex items-center rounded-lg py-2 px-3 ">
+        <button className="flex items-center rounded-lg p-1 border-2 text-md sm:text-lg">
             <span className="px-2">Watchlist</span>
-            <span className="border-2 py-1 px-3 rounded-full">{number}</span>
+            <span className="py-0 px-2 rounded-full">{number}</span>
         </button>
     )
 }
